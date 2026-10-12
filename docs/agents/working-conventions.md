@@ -29,8 +29,8 @@ Decide on your own anything the prompts already answer, such as names, file plac
 
 ## Git
 
-- Create a branch for each task from an up-to-date main, named after what it adds: feature/<name>, fix/<name> or refactor/<name>.
-- Commit locally with Conventional Commits messages: `feat: ...`, `fix: ...`, `refactor: ...`, `test: ...`. Each commit should build.
+- Create a branch for each task from an up-to-date main, named after what it adds: feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name> or docs/<name>.
+- Commit locally with Conventional Commits messages: `feat: ...`, `fix: ...`, `refactor: ...`, `test: ...`, `chore: ...`, `build: ...`, `ci: ...`, `docs: ...`. Each commit should build.
 - Never push, merge, rebase onto main, or force push without asking me first.
 
 ## Explaining choices
