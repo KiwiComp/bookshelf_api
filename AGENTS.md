@@ -86,7 +86,7 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 - Details are built from two requests made concurrently in the repository and combined into one Book:
   - `GET works/{bookId}.json` for title, description and covers. `description` is either a string or an object with a `value` field; handle both.
   - `GET search.json?q=key:/works/{bookId}&fields=key,author_name,first_publish_year,number_of_pages_median,cover_i&limit=1` for author, year and page count.
-- Covers: `https://covers.openlibrary.org/b/id/{coverId}-M.jpg` in lists and `-L.jpg` on the detail screen. The large image is the one downloaded when a book is saved.
+- Covers: `https://covers.openlibrary.org/b/id/{coverId}-M.jpg` in lists and `-L.jpg` on the detail screen. The large image is the one downloaded when a book is saved. The covers base URL comes from BuildConfig.COVERS_BASE_URL, the same way as the API base URL.
 - Ids: the API returns keys like `/works/OL27448W`. The app's bookId is the part after `/works/`, as a String.
 - Example responses: docs/api/search-response.json, docs/api/work-response.json and docs/api/work-search-response.json. Use them for network models and MockWebServer tests.
 
