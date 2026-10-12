@@ -2,6 +2,8 @@
 
 Instructions for AI coding agents working in this repository. Read this file in full before every task.
 
+Read docs/roadmap.md to see the current step. When a task completes a step, update its status in the same branch.
+
 ## About the app
 
 **Name:** Bookshelf (package com.example.bookshelfapi)
