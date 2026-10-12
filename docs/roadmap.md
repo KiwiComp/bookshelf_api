@@ -7,7 +7,7 @@ Status: Not started, In progress, Done.
 | # | Step | Branch | Content | Status |
 | --- | --- | --- | --- | --- |
 | 0 | Project setup | refactor/project-setup | Build configuration, dependencies, entry points, theme | Done |
-| 1 | Network | feature/network | core/model (BookSummary, Book), core/network (Open Library API, network models, NetworkModule with User-Agent), MockWebServer tests | Not started |
+| 1 | Network | feature/network | core/model (BookSummary, Book), core/network (Open Library API, network models, NetworkModule with User-Agent), MockWebServer tests | Done |
 | 2 | Database | feature/database | BookEntity, BookDao, AppDatabase, DatabaseModule, core/data/storage for cover files in filesDir/covers/ | Not started |
 | 3 | Repository | feature/repository | BookRepository: search, details from two concurrent requests, save, remove, read status, Collator sorting, dispatcher module | Not started |
 | 4 | Navigation shell | feature/navigation-shell | TopLevelDestination, Scaffold with bottom bar, NavHost, navigateToTopLevel and popToTopLevel, shared components in core/ui/components | Not started |
