@@ -71,6 +71,35 @@ A screen where the user types a query and results load from the network follows 
           }
           .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SearchUiState.Idle)
 
+- With paging, the repository returns SearchResults (see the network rules) and Success holds it. The page is screen-local input in a private MutableStateFlow, combined with the retry trigger inside flatMapLatest, so changing page or retrying re-runs only the current query. A new query starts at page 1, and changing page shows Loading and replaces the results:
+
+      private val page = MutableStateFlow(1)
+      private val retryTrigger = MutableStateFlow(0)
+
+      val uiState: StateFlow<SearchUiState> = snapshotFlow { query.trim() }
+          .debounce(300)
+          .distinctUntilChanged()
+          .onEach { page.value = 1 }
+          .flatMapLatest { text ->
+              if (text.isEmpty()) {
+                  flowOf(SearchUiState.Idle)
+              } else {
+                  combine(page, retryTrigger) { number, _ -> number }
+                      .flatMapLatest { number ->
+                          flow<SearchUiState> {
+                              emit(SearchUiState.Loading)
+                              emit(SearchUiState.Success(itemRepository.search(text, number)))
+                          }.catch { exception -> emit(exception.toSearchError()) }
+                      }
+              }
+          }
+          .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SearchUiState.Idle)
+
+      fun onNextPage() = page.update { number -> number + 1 }
+      fun onPreviousPage() = page.update { number -> (number - 1).coerceAtLeast(1) }
+      fun retry() = retryTrigger.update { count -> count + 1 }
+
+- page is reset in onEach, before flatMapLatest subscribes to it, so a new query never makes a request with the previous query's page. Whether the previous and next controls are enabled is a getter on Success (results.page > 1, results.page < results.pageCount), not a stored field.
 - Errors are mapped by exception type to distinct error states or error kinds (no connection, server error, unexpected response), each with its own text in strings.xml. Rethrow anything that is not an expected network or parsing exception.
 - Retry re-runs the current query through the retry trigger described above.
 - Add @OptIn(FlowPreview::class) and @OptIn(ExperimentalCoroutinesApi::class) if the compiler requires them for debounce and flatMapLatest.

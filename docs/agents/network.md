@@ -35,7 +35,7 @@ This app reads data from a remote API and lets the user save selected items loca
 
 The repository exposes:
 
-- `suspend fun search(query: String): List<XSummary>`: always from the network. Never cached.
+- `suspend fun search(query: String, page: Int): SearchResults`: always from the network. Never cached. `page` starts at 1. SearchResults is a core.model class with the page's `List<XSummary>`, the total number of matches, the page and the number of pages. The repository computes the number of pages from the page size, so the page size never leaves the data layer. Without paging, `search(query: String): List<XSummary>` is enough.
 - `fun observeX(id: String): Flow<X>`: from Room if the item is saved, otherwise fetched once from the network. Saved items are never refreshed from the network.
 - `fun observeIsSaved(id: String): Flow<Boolean>`
 - `fun observeSaved(): Flow<List<X>>`: from Room only.
