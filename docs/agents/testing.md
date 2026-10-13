@@ -21,14 +21,16 @@ Tests are part of every change in this project. Follow the rules below whenever 
 | --- | --- | --- | --- |
 | ViewModel | Unit | test | Initial state, every state (Loading, Success, empty Success, Error), every public function, messages and flags set and consumed |
 | UiState getters, conversions, extension functions | Unit | test | Every branch and edge case (empty, null, boundaries) |
-| Repository implementation (Room) | Instrumented, in-memory database | androidTest | Every function, entity-to-model conversion, Flow emits after writes |
+| Repository implementation (Room) | Instrumented, in-memory database | androidTest | Every function, entity-to-model conversion, Flow emits after writes, sorting, files deleted with their item |
 | DAO | Instrumented, in-memory database | androidTest | Every query, including empty tables and edge cases |
 | Stateless Screen | Compose UI | androidTest | Each UiState renders correctly, and each lambda is called by its control |
 | Shared component in core/ui | Compose UI | androidTest | Rendering of its parameters, and each lambda |
 | Retrofit API and network models | Unit, MockWebServer | test | Requests have the right path and query, responses parse into network models, error status codes surface as HttpException |
-| Repository implementation using the network | Unit, fake API and in-memory data | test | Network models convert correctly, saved items come from Room and never from the network, unsaved items are fetched, exceptions propagate |
+| Repository implementation using the network | Unit, fake API and fake DAO | test | Network models convert correctly, saved items come from Room and never from the network, unsaved items are fetched, exceptions propagate |
 | File store (e.g. image files) | Unit, temporary folder | test | Files are written, read and deleted, and a failed download still saves the item without a file |
 | Feature navigation file and app-level navigation | Instrumented, TestNavHostController | androidTest | navigateTo functions reach the right destination with the right arguments, and the back stack is correct after popUpTo, popToTopLevel and tab switches |
+
+A repository that uses both Room and the network gets both tests: the unit test (FakeXApi and FakeXDao) covers its logic, conversions and exceptions, and the instrumented test (in-memory database) covers what depends on real Room behavior.
 
 A new feature therefore normally arrives with: a ViewModel test per screen, a UI test per screen, a navigation test for its navigation file, and repository and DAO tests for any new data code.
 
@@ -68,14 +70,23 @@ A new feature therefore normally arrives with: a ViewModel test per screen, a UI
 
 - Use TestNavHostController with the app's NavHost and assert on currentBackStack and currentDestination.
 
+### Hilt in instrumented tests
+
+Unit tests never use Hilt. Instrumented tests that need Hilt ViewModels, such as app-level navigation tests, use this setup:
+
+- HiltTestRunner (in androidTest, root package) is the testInstrumentationRunner and starts HiltTestApplication.
+- HiltTestActivity is an empty @AndroidEntryPoint activity in src/debug, used with createAndroidComposeRule<HiltTestActivity>().
+- The test class is annotated with @HiltAndroidTest and declares HiltAndroidRule with `order = 0` before the Compose rule with `order = 1`.
+- TestXModule in androidTest under core/testing/ uses @TestInstallIn to replace the data layer's module and binds the repository interface to FakeXRepository.
+- Fakes for instrumented tests live in src/androidTest under core/testing/, separate from the fakes in src/test.
+
 ## Dependencies
 
 Add through the version catalog, using the latest stable versions: kotlinx-coroutines-test, Turbine and OkHttp MockWebServer (testImplementation), androidx.navigation:navigation-testing (androidTestImplementation). JUnit, Compose UI test and the Android test runner come from the template.
 
 ## Running tests
 
-- Run the unit tests (./gradlew test) after every change.
-- Run the instrumented tests (./gradlew connectedAndroidTest) when androidTest code or the code it covers has changed. If no device or emulator is available, say so explicitly instead of claiming they pass.
+- After every change, run the checks in .claude/skills/verify/SKILL.md. It decides when the instrumented tests are needed and what to say when no device is available.
 - Report which test tasks you ran and their result.
 
 ## Before you finish
