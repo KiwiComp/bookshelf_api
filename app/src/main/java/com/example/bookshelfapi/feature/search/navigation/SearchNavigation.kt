@@ -13,8 +13,8 @@ data object SearchDestination
 fun NavController.navigateToSearch(navOptions: NavOptions? = null) =
     navigate(SearchDestination, navOptions)
 
-fun NavGraphBuilder.searchScreen() {
+fun NavGraphBuilder.searchScreen(onOpenBook: (bookId: String) -> Unit) {
     composable<SearchDestination> {
-        SearchRoute()
+        SearchRoute(onOpenBook = onOpenBook)
     }
 }

@@ -1,9 +1,12 @@
 package com.example.bookshelfapi.navigation
 
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph
 import androidx.navigation.compose.ComposeNavigator
@@ -12,11 +15,18 @@ import androidx.navigation.toRoute
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.bookshelfapi.HiltTestActivity
+import com.example.bookshelfapi.core.model.BookSummary
+import com.example.bookshelfapi.core.model.SearchResults
+import com.example.bookshelfapi.core.testing.FakeBookRepository
 import com.example.bookshelfapi.core.ui.theme.BookshelfTheme
 import com.example.bookshelfapi.feature.bookdetail.navigation.BookDetailDestination
 import com.example.bookshelfapi.feature.bookdetail.navigation.navigateToBookDetail
 import com.example.bookshelfapi.feature.bookshelf.navigation.BookshelfDestination
 import com.example.bookshelfapi.feature.search.navigation.SearchDestination
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
 import kotlin.reflect.KClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -25,16 +35,24 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class TopLevelNavigationTest {
 
-    @get:Rule
-    val composeTestRule = createComposeRule()
+    @get:Rule(order = 0)
+    val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
+    val composeTestRule = createAndroidComposeRule<HiltTestActivity>()
+
+    @Inject
+    lateinit var repository: FakeBookRepository
 
     private lateinit var navController: TestNavHostController
 
     @Before
     fun setUp() {
+        hiltRule.inject()
         composeTestRule.setContent {
             navController = TestNavHostController(ApplicationProvider.getApplicationContext())
             navController.navigatorProvider.addNavigator(ComposeNavigator())
@@ -48,6 +66,38 @@ class TopLevelNavigationTest {
     fun the_app_starts_on_search() {
         assertBackStack(SearchDestination::class)
         composeTestRule.onNodeWithText("Search books").assertExists()
+    }
+
+    @Test
+    fun tapping_a_search_result_opens_book_detail_with_its_id() {
+        repository.searchResults = SearchResults(
+            books = listOf(
+                BookSummary(
+                    id = "OL27448W",
+                    title = "Gösta Berlings saga",
+                    author = "Selma Lagerlöf",
+                    year = 1891,
+                    thumbnailUrl = null,
+                ),
+            ),
+            totalCount = 1,
+            page = 1,
+            pageCount = 1,
+        )
+        composeTestRule.onNode(hasSetTextAction()).performTextInput("Lagerlöf")
+        // The search is debounced, so wait for the result instead of asserting right away.
+        composeTestRule.waitUntil(timeoutMillis = 5_000) {
+            composeTestRule.onAllNodesWithText("Gösta Berlings saga")
+                .fetchSemanticsNodes()
+                .isNotEmpty()
+        }
+
+        composeTestRule.onNodeWithText("Gösta Berlings saga").performClick()
+        composeTestRule.waitForIdle()
+
+        assertBackStack(SearchDestination::class, BookDetailDestination::class)
+        val destination = navController.currentBackStackEntry?.toRoute<BookDetailDestination>()
+        assertEquals(BookDetailDestination("OL27448W"), destination)
     }
 
     @Test
