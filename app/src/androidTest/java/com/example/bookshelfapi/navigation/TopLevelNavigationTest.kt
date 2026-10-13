@@ -16,12 +16,14 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.bookshelfapi.HiltTestActivity
+import com.example.bookshelfapi.core.model.Book
 import com.example.bookshelfapi.core.model.BookSummary
 import com.example.bookshelfapi.core.model.SearchResults
 import com.example.bookshelfapi.core.testing.FakeBookRepository
 import com.example.bookshelfapi.core.ui.theme.BookshelfTheme
 import com.example.bookshelfapi.feature.bookdetail.navigation.BookDetailDestination
 import com.example.bookshelfapi.feature.bookdetail.navigation.navigateToBookDetail
+import com.example.bookshelfapi.feature.bookdetail.navigation.navigateToBookDetailFromBookshelf
 import com.example.bookshelfapi.feature.bookshelf.navigation.BookshelfDestination
 import com.example.bookshelfapi.feature.search.navigation.SearchDestination
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -34,6 +36,17 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
+private val savedBook = Book(
+    id = "OL27448W",
+    title = "Gösta Berlings saga",
+    author = "Selma Lagerlöf",
+    year = 1891,
+    coverImage = null,
+    summary = null,
+    pageCount = 412,
+    isRead = false,
+)
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
@@ -162,6 +175,48 @@ class TopLevelNavigationTest {
     }
 
     @Test
+    fun navigateToBookDetailFromBookshelf_pushes_book_detail_opened_from_the_bookshelf() {
+        navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
+        navigate { navigateToBookDetailFromBookshelf("OL27448W") }
+
+        assertBackStack(
+            SearchDestination::class,
+            BookshelfDestination::class,
+            BookDetailDestination::class,
+        )
+        val destination = navController.currentBackStackEntry?.toRoute<BookDetailDestination>()
+        assertEquals(
+            BookDetailDestination(bookId = "OL27448W", openedFromBookshelf = true),
+            destination,
+        )
+    }
+
+    @Test
+    fun removing_a_book_opened_from_the_bookshelf_returns_to_the_bookshelf() {
+        repository.savedBooks.value = listOf(savedBook)
+        navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
+        navigate { navigateToBookDetailFromBookshelf(savedBook.id) }
+
+        removeBookWithTheDialog()
+
+        assertBackStack(SearchDestination::class, BookshelfDestination::class)
+        assertTrue(repository.savedBooks.value.isEmpty())
+    }
+
+    @Test
+    fun removing_a_book_opened_from_search_stays_on_book_detail_as_not_saved() {
+        repository.savedBooks.value = listOf(savedBook)
+        repository.remoteBooks[savedBook.id] = savedBook
+        navigate { navigateToBookDetail(savedBook.id) }
+
+        removeBookWithTheDialog()
+
+        assertBackStack(SearchDestination::class, BookDetailDestination::class)
+        assertTrue(repository.savedBooks.value.isEmpty())
+        composeTestRule.onNodeWithText("Save to bookshelf").assertExists()
+    }
+
+    @Test
     fun switching_tab_from_book_detail_removes_book_detail_from_the_back_stack() {
         navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
         navigate { navigateToBookDetail("OL27448W") }
@@ -180,6 +235,12 @@ class TopLevelNavigationTest {
         composeTestRule.waitForIdle()
 
         assertBackStack(SearchDestination::class)
+    }
+
+    private fun removeBookWithTheDialog() {
+        composeTestRule.onNodeWithText("Remove from bookshelf").performClick()
+        composeTestRule.onNodeWithText("Remove").performClick()
+        composeTestRule.waitForIdle()
     }
 
     private fun navigate(action: TestNavHostController.() -> Unit) {

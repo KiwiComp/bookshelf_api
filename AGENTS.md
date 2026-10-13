@@ -75,6 +75,7 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 
 - Loading, Not found and the error states only happen for books that are not saved, since saved books are read from Room.
 - "Back to search" does the same as the back arrow: one step back.
+- Removing the book leaves the screen only when it was opened from Bookshelf (see Removing a book).
 - After saving succeeds, the screen shows the Saved state.
 
 **Flows:** None.
@@ -128,7 +129,9 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 **Removing a book:**
 
 - Only from Book detail, through the confirmation dialog. Whether the dialog is shown is UI state held with rememberSaveable in the Route.
-- After confirming, the ViewModel deletes the book and its cover file, then sets a flag in UiState. The Route reacts with LaunchedEffect and calls onRemoved, which the NavHost connects to popToTopLevel, so the user returns to the tab they came from.
+- What happens after confirming depends on where Book detail was opened from. BookDetailDestination has `openedFromBookshelf: Boolean = false`: Search opens it with navigateToBookDetail, Bookshelf with navigateToBookDetailFromBookshelf. The ViewModel receives the value through assisted injection.
+- Opened from Bookshelf: the ViewModel deletes the book and its cover file, stops observing the book, and sets a flag in UiState. The Route reacts with LaunchedEffect and calls onRemoved, which the NavHost connects to popToTopLevel, so the user returns to Bookshelf.
+- Opened from Search: the book still exists in the book database, so the user stays on Book detail. The ViewModel deletes the book and its cover file, and the screen follows the repository, which fetches the book again and shows the Not saved state. Offline, this shows the No connection state.
 
 **Snackbars for temporary errors:**
 

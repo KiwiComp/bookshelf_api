@@ -22,6 +22,9 @@ internal fun BookshelfNavHost(
     ) {
         searchScreen(onOpenBook = navController::navigateToBookDetail)
         bookshelfScreen()
-        bookDetailScreen(onBack = { navController.popBackStack() })
+        bookDetailScreen(
+            onBack = { navController.popBackStack() },
+            onRemoved = { navController.popToTopLevel() },
+        )
     }
 }

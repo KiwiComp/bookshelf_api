@@ -12,10 +12,11 @@ Status: Not started, In progress, Done.
 | 3 | Repository | feature/repository | BookRepository: search, details from two concurrent requests, save, remove, read status, Collator sorting | Done |
 | 4 | Navigation shell | feature/navigation-shell | TopLevelDestination, Scaffold with bottom bar, NavHost, navigateToTopLevel and popToTopLevel, shared components in core/ui/components | Done |
 | 5 | Search | feature/search | Search screen with all states and paging | Done |
-| 6 | Book detail | feature/book-detail | Book detail screen with save, remove dialog and snackbars | Not started |
+| 6 | Book detail | feature/book-detail | Book detail screen with save, remove dialog and snackbars | Done |
 | 7 | Bookshelf | feature/bookshelf | Bookshelf screen with filter, read toggle and all states | Not started |
 
 ## Decisions
 
 - The test dependencies required by docs/agents/testing.md (kotlinx-coroutines-test, Turbine, MockWebServer, navigation-testing) are added in the step that first needs them, not in a separate branch.
 - The dispatcher module moved from step 3 to step 2, since CoverImageStore needs the @IoDispatcher.
+- Book detail has two modes for removing a book (see AGENTS.md, Removing a book). Step 7 connects the Bookshelf list's onOpenBook to navigateToBookDetailFromBookshelf.
