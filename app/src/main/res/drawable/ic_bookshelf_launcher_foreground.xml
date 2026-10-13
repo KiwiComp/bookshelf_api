@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:pivotX="54"
+        android:pivotY="54"
+        android:scaleX="0.85"
+        android:scaleY="0.85">
+        <!-- Book 1 -->
+        <path
+            android:fillColor="#F1E4E8"
+            android:pathData="M33.5,36h8a1.5,1.5 0,0 1,1.5 1.5v35a1.5,1.5 0,0 1,-1.5 1.5h-8a1.5,1.5 0,0 1,-1.5 -1.5v-35a1.5,1.5 0,0 1,1.5 -1.5z" />
+        <!-- Book 2 with two bands -->
+        <path
+            android:fillColor="#CEB1BE"
+            android:pathData="M46.5,30h9a1.5,1.5 0,0 1,1.5 1.5v41a1.5,1.5 0,0 1,-1.5 1.5h-9a1.5,1.5 0,0 1,-1.5 -1.5v-41a1.5,1.5 0,0 1,1.5 -1.5z" />
+        <path
+            android:fillColor="#8A474B"
+            android:pathData="M45,35h12v2h-12zM45,67h12v2h-12z" />
+        <!-- Book 3 -->
+        <path
+            android:fillColor="#F1E4E8"
+            android:pathData="M60.5,40h6a1.5,1.5 0,0 1,1.5 1.5v31a1.5,1.5 0,0 1,-1.5 1.5h-6a1.5,1.5 0,0 1,-1.5 -1.5v-31a1.5,1.5 0,0 1,1.5 -1.5z" />
+        <!-- Leaning book -->
+        <group
+            android:pivotX="80"
+            android:pivotY="74"
+            android:rotation="-14">
+            <path
+                android:fillColor="#E5ABAD"
+                android:pathData="M71.5,38h7a1.5,1.5 0,0 1,1.5 1.5v33a1.5,1.5 0,0 1,-1.5 1.5h-7a1.5,1.5 0,0 1,-1.5 -1.5v-33a1.5,1.5 0,0 1,1.5 -1.5z" />
+        </group>
+        <!-- Shelf -->
+        <path
+            android:fillColor="#F1E4E8"
+            android:pathData="M30,74h48a2,2 0,0 1,0 4h-48a2,2 0,0 1,0 -4z" />
+    </group>
+</vector>
