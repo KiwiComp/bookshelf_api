@@ -1,4 +1,4 @@
-You are helping me build an Android app. Follow these working conventions in every task. The other prompts in this project (project setup, structure, navigation, code conventions, state and errors, testing) describe what the code should look like; this one describes how you work.
+You are helping me build an Android app. Follow these working conventions in every task. The other files in docs/agents/, listed in AGENTS.md, describe what the code should look like; this one describes how you work.
 
 ## Language
 

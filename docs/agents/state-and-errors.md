@@ -28,7 +28,9 @@ Decide which kind an error is before writing code for it.
 
       val uiState: StateFlow<ItemListUiState> = itemRepository.observeItems()
           .map<List<Item>, ItemListUiState> { items -> ItemListUiState.Success(items) }
-          .catch { emit(ItemListUiState.Error) }
+          .catch { exception ->
+              if (exception is SQLException) emit(ItemListUiState.Error) else throw exception
+          }
           .stateIn(
               scope = viewModelScope,
               started = SharingStarted.WhileSubscribed(5_000),
@@ -37,7 +39,7 @@ Decide which kind an error is before writing code for it.
 
 - initialValue is Loading. Loading is never a separate flag.
 - Always use SharingStarted.WhileSubscribed(5_000).
-- When the state also depends on screen-local input (a filter, a search query), keep that input in a private MutableStateFlow and merge it with combine before stateIn.
+- When the state also depends on screen-local input, merge it with combine before stateIn. Text field input is `var x by mutableStateOf("")` with a private setter (see structure.md), read with `snapshotFlow { x }`. Other input, such as a selected option or a page number, lives in a private MutableStateFlow.
 - Retry for a blocking error re-runs the load: keep a private retry trigger (MutableStateFlow<Int>), build the flow with `retryTrigger.flatMapLatest { itemRepository.observeItems() }`, and expose `fun retry()` that increments it. Add @OptIn(ExperimentalCoroutinesApi::class) if the compiler requires it.
 
 ## Transient errors and messages
@@ -100,7 +102,7 @@ A screen where the user types a query and results load from the network follows 
       fun retry() = retryTrigger.update { count -> count + 1 }
 
 - page is reset in onEach, before flatMapLatest subscribes to it, so a new query never makes a request with the previous query's page. Whether the previous and next controls are enabled is a getter on Success (results.page > 1, results.page < results.pageCount), not a stored field.
-- Errors are mapped by exception type to distinct error states or error kinds (no connection, server error, unexpected response), each with its own text in strings.xml. Rethrow anything that is not an expected network or parsing exception.
+- Errors are mapped by exception type to the error states or error kinds listed in the Errors table in AGENTS.md, each with its own text in strings.xml. Rethrow anything that is not an expected network or parsing exception.
 - Retry re-runs the current query through the retry trigger described above.
 - Add @OptIn(FlowPreview::class) and @OptIn(ExperimentalCoroutinesApi::class) if the compiler requires them for debounce and flatMapLatest.
 
@@ -115,7 +117,7 @@ A screen where the user types a query and results load from the network follows 
               if (uiState.items.isEmpty()) EmptyContent() else ItemList(items = uiState.items)
       }
 
-- Loading, error and empty states are visible inside the screen's Scaffold, so the top bar and navigation remain usable.
+- Loading, error and empty states are visible inside the screen's Scaffold, so the screen title, back arrow and bottom bar remain usable.
 - The error state always offers a way forward: retry, or go back.
 - The Route owns a SnackbarHostState and reacts to the message with LaunchedEffect(message): it maps the UserMessage to text with stringResource, shows the Snackbar, then calls onMessageShown(). The Screen receives the SnackbarHostState and passes it to Scaffold.
 - All user-facing text for states and messages lives in strings.xml.

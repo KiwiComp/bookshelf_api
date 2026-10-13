@@ -11,8 +11,8 @@ You are working in an Android app built with Kotlin, Jetpack Compose, Navigation
 
 For every screen, the feature's navigation file contains exactly three things:
 
-1. A destination: `@Serializable data object XDestination`, or `@Serializable data class XDestination(val id: Long)` when it takes arguments.
-2. `fun NavController.navigateToX(...)` that builds the destination. Only top-level tabs take `navOptions: NavOptions? = null`.
+1. A destination: `@Serializable data object XDestination`, or `@Serializable data class XDestination(val id: String)` when it takes arguments. The id has the API's id type (see network.md).
+2. `fun NavController.navigateToX(...)` that builds the destination, or two of them for a screen with two modes (see Arguments). Only top-level tabs take `navOptions: NavOptions? = null`.
 3. `fun NavGraphBuilder.xScreen(...)` that registers `composable<XDestination> { entry -> XRoute(...) }`, reads arguments with `entry.toRoute<XDestination>()`, and passes them to the Route as plain parameters.
 
 The destination class is referenced only in this file (and in TopLevelDestination for tabs). Several screens of the same feature share one file.
@@ -22,7 +22,7 @@ The destination class is referenced only in this file (and in TopLevelDestinatio
 - Each screen file is named XScreen.kt and contains XRoute (obtains the ViewModel and reacts to events) and XScreen (stateless UI).
 - Screens receive data as parameters and events as lambdas. They never receive a NavController and never reference a destination.
 - Lambdas describe what the user did, not where to go: onOpenItem, onSaved, onDeleted, onBack. Use past tense for completed actions.
-- A lambda carries data only when the next screen needs it. Name the parameters when the type alone is unclear: `onEdit: (date: LocalDate, itemId: Long) -> Unit`.
+- A lambda carries data only when the next screen needs it. Name the parameters when the type alone is unclear: `onEdit: (date: LocalDate, itemId: String) -> Unit`.
 - Routes obtain their ViewModel with hiltViewModel(), never viewModel().
 - When a ViewModel needs a navigation argument, use assisted injection: `viewModel: XViewModel = hiltViewModel<XViewModel, XViewModel.Factory> { it.create(id) }`. ViewModels never read arguments from SavedStateHandle and never reference a destination.
 - Data work (saving, deleting) happens in the ViewModel, never in navigation code. Events that follow data work are exposed as flags in UiState (e.g. isSaved, isDeleted). The Route reacts with `LaunchedEffect` on those flags and calls the navigation lambda. Never call a navigation lambda directly from a click handler when data work comes first.
@@ -31,7 +31,8 @@ The destination class is referenced only in this file (and in TopLevelDestinatio
 
 - Destinations hold only simple types: Long, Int, String, Boolean. Pass ids, never objects.
 - Convert other types in the navigation file, in both directions (e.g. `date.toEpochDay()` in, `LocalDate.ofEpochDay(...)` out).
-- One screen with two modes (create/edit): one destination with an optional argument (`val itemId: Long? = null`), two navigateTo functions with descriptive names, and the navigation file picks the exit lambda based on the mode.
+- One screen with two modes (create/edit): one destination with an optional argument (`val itemId: String? = null`), two navigateTo functions with descriptive names, and the navigation file picks the exit lambda based on the mode.
+- When the mode also changes the data work, such as whether removing an item leaves the screen, the navigation file passes the mode to the Route as a plain parameter (e.g. `openedFromList: Boolean = false`), and the ViewModel receives it through assisted injection. The ViewModel decides whether to set the flag that the Route reacts to; the navigation file does not pick the lambda.
 
 ## NavHost
 

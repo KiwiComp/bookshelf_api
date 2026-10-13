@@ -46,7 +46,7 @@ Screens:
 - A list screen calls an onOpenX(id) lambda. It never fetches details itself.
 - The detail destination carries only the id. The detail ViewModel receives it through assisted injection and observes observeX(id) and observeIsSaved(id).
 - The same detail screen and destination are used for search results and saved items.
-- Lists of saved items convert X to XSummary (X.toSummary() in core.model) so search results and saved items share one list component.
+- When rows of saved items show the same as search result rows, lists of saved items convert X to XSummary (X.toSummary() in core.model) so both share one list component. When saved rows show more, such as a read status toggle, the saved list has its own row composable that takes X.
 
 ## Images
 
@@ -60,7 +60,7 @@ Screens:
 ## Errors and offline behavior
 
 - Repositories and the network layer let exceptions propagate. Do not hide retries or fallbacks in them.
-- ViewModels catch specific exceptions and map each to its own error: IOException means no connection, HttpException means a server error, SerializationException means an unexpected response. Follow the state and error rules for how they are shown.
+- ViewModels catch specific exceptions (IOException, HttpException, SerializationException) and map them to the errors listed in the Errors table in AGENTS.md. Follow the state and error rules for how they are shown.
 - Features that need the network (search, details of unsaved items) show an error with a retry action when offline. Never show stale or invented data instead.
 - Everything about saved items, including their images, works without a network connection.
 

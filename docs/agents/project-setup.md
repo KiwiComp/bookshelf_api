@@ -82,8 +82,8 @@ Add only what the app needs. The full set for an app with navigation, Hilt, Room
 
 - Keep the template's .gitignore and replace the individual /.idea/ entries with a single `.idea/`.
 - Only add ignore rules for files that actually appear in `git status`. Signing keys and their passwords are never committed.
-- If the repository has no commits yet, make the first commit on main: `Initial project setup`. Otherwise commit the setup changes on a branch named refactor/project-setup.
-- After that, every change is made on its own branch named after what it adds (feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name>, docs/<name>), with Conventional Commits messages (`feat: ...`, `fix: ...`, `refactor: ...`, `test: ...`, `chore: ...`, `build: ...`, `ci: ...`, `docs: ...`).
+- Never commit on your own. If the repository has no commits yet, ask before making the first commit on main, with the message `Initial project setup`. Otherwise make the setup changes on a branch named refactor/project-setup and leave them uncommitted; they are committed through the /pull-request skill.
+- After that, follow the Git rules in working-conventions.md for branches, and the /pull-request skill for commit messages.
 
 ## Before you finish
 

@@ -12,7 +12,7 @@ Write all Kotlin and Compose code in this project according to the conventions b
 
 - Classes, objects and composables that emit UI: PascalCase. Functions, properties and composables that return a value (remember..., stringResource): camelCase. Constants: UPPER_SNAKE_CASE. Packages: lowercase, no underscores.
 - A private mutable state holder is prefixed with an underscore and paired with a read-only public one: `_uiState` / `uiState`.
-- Event lambdas start with `on` and describe what happened from the component's point of view, never where to go: onItemClick, onSaved, onDeleted, onValueChange.
+- Event lambdas start with `on` and describe what happened from the component's point of view, never where to go: onOpenItem, onSaved, onDeleted, onValueChange. Lambdas that lead to navigation follow the Screens rules in navigation.md.
 - Name a parameter after its role. Use the short role (`repository`, `database`, `context`) when the type is right next to it and there is only one; use the full name (`itemRepository`) when several of the same kind exist.
 
 ## Values and types
