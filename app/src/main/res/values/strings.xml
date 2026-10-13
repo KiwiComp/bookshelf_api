@@ -27,4 +27,33 @@
     <string name="search_previous_page">Previous page</string>
     <string name="search_next_page">Next page</string>
     <string name="bookshelf_title">My bookshelf</string>
+
+    <string name="detail_year_and_pages">%1$s · %2$s</string>
+    <plurals name="detail_page_count">
+        <item quantity="one">%d page</item>
+        <item quantity="other">%d pages</item>
+    </plurals>
+    <string name="detail_about">About the book</string>
+    <string name="detail_save">Save to bookshelf</string>
+    <string name="detail_saving">Saving…</string>
+    <string name="detail_save_hint">The book is saved as not read.</string>
+    <string name="detail_status_label">Status on your bookshelf</string>
+    <string name="detail_not_read">Not read</string>
+    <string name="detail_read">Read</string>
+    <string name="detail_remove">Remove from bookshelf</string>
+    <string name="detail_loading">Loading book</string>
+    <string name="detail_not_found_title">Book not found</string>
+    <string name="detail_not_found_message">This book is no longer available in the book database.</string>
+    <string name="detail_back_to_search">Back to search</string>
+    <string name="detail_error_connection_title">Couldn’t load the book</string>
+    <string name="detail_error_connection_message">Check your internet connection and try again.</string>
+    <string name="detail_error_server_title">Couldn’t get this book</string>
+    <string name="detail_error_server_message">The book database isn’t responding. Try again in a moment.</string>
+    <string name="detail_remove_dialog_title">Remove book?</string>
+    <string name="detail_remove_dialog_message">“%1$s” will be removed from your bookshelf, along with its read status. You can save it again from search.</string>
+    <string name="detail_remove_dialog_cancel">Cancel</string>
+    <string name="detail_remove_dialog_confirm">Remove</string>
+    <string name="detail_save_failed">Couldn’t save the book</string>
+    <string name="detail_remove_failed">Couldn’t remove the book</string>
+    <string name="detail_update_read_status_failed">Couldn’t update read status</string>
 </resources>

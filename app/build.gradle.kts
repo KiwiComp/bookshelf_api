@@ -41,6 +41,10 @@ android {
         compose = true
         buildConfig = true
     }
+    testOptions {
+        // Lets unit tests create Android exceptions such as SQLException for the fakes to throw.
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 ksp {
