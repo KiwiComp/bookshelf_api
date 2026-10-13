@@ -36,6 +36,7 @@ A new feature therefore normally arrives with: a ViewModel test per screen, a UI
 
 - Test classes mirror the package of the code under test: `feature/items/ItemListViewModel.kt` is tested by `feature/items/ItemListViewModelTest.kt`.
 - Test names are sentences in backticks that state the behavior: `` fun `toggleRead flips isRead of the matching item`() ``.
+- Exception: tests in androidTest use the same sentence with underscores instead of spaces: `fun toggleRead_flips_isRead_of_the_matching_item()`. D8 rejects spaces in method and class names when minSdk is below 30, so backtick names with spaces fail the androidTest build.
 - One behavior per test, structured as given, when, then.
 - Tests are deterministic: no real network, no Thread.sleep, no dependence on the current date or time unless it is passed in.
 
