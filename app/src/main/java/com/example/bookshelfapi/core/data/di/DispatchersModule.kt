@@ -1,6 +1,7 @@
 package com.example.bookshelfapi.core.data.di
 
 import android.content.Context
+import com.example.bookshelfapi.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +24,11 @@ annotation class IoDispatcher
 @Retention(AnnotationRetention.BINARY)
 annotation class CoversDirectory
 
+/** The base URL that cover image URLs are built from. */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CoversBaseUrl
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatchersModule {
@@ -36,4 +42,8 @@ object DispatchersModule {
     @CoversDirectory
     fun provideCoversDirectory(@ApplicationContext context: Context): File =
         File(context.filesDir, COVERS_DIRECTORY)
+
+    @Provides
+    @CoversBaseUrl
+    fun provideCoversBaseUrl(): String = BuildConfig.COVERS_BASE_URL
 }
