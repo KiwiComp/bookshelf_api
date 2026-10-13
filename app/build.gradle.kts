@@ -22,6 +22,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_BASE_URL", "\"https://openlibrary.org/\"")
+        buildConfigField("String", "COVERS_BASE_URL", "\"https://covers.openlibrary.org/\"")
     }
 
     buildTypes {
