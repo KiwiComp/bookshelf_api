@@ -68,6 +68,16 @@ any default attribution behavior.
   | `## Tests` | Only if tests were run: each test task and its result. Leave the heading out otherwise. |
   | `## Notes` | Only if something important is not covered above, such as something that could not be verified or needs follow-up. Leave the heading out otherwise. |
 
+### Linked issue
+
+- Only when the branch name matches `<prefix>/<number>-<short-name>`, as created by /fix-issue.
+  Never take an issue number from anywhere else.
+- Check the issue with `gh issue view <number>`. If it does not exist or is closed, leave the
+  line out and say why in the report.
+- Add one last bullet under `## Summary`: `- Fixes #<number>` when the branch resolves the whole
+  issue, otherwise `- Refs #<number>`, which links without closing it. If it is not clear whether
+  the whole issue is resolved, ask.
+
 Example:
 
 ```markdown
