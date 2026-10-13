@@ -191,6 +191,7 @@ The rules for this project live in docs/agents/. Read the files that apply befor
 | docs/agents/state-and-errors.md | Writing a ViewModel or UiState, or handling loading, empty or error states |
 | docs/agents/network.md | Calling the API, adding network models, saving items locally, or handling images |
 | docs/agents/testing.md | Always: every change comes with tests |
+| docs/agents/reviewing.md | Running a review skill (review-conventions, review-ui, review-docs) |
 
 If these files and existing code disagree, point out the difference instead of following either one silently.
 

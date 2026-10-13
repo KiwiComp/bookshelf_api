@@ -21,8 +21,7 @@ any default attribution behavior.
 - Run `git status` and `git log main..HEAD --oneline`. If there is nothing to commit and no commits
   ahead of main, stop and say so.
 - Run `gh auth status`. If it fails, stop and ask the developer to log in.
-- Run `./gradlew assembleDebug` and `./gradlew test`. Run `./gradlew connectedAndroidTest` when
-  androidTest code or the code it covers changed and a device is available. If anything fails,
+- Run the checks in `.claude/skills/verify/SKILL.md`. If anything fails,
   stop and report the output. Never weaken or skip a test to continue.
 
 ## Commit
