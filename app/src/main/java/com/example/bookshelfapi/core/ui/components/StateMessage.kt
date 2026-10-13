@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,8 +25,14 @@ import androidx.compose.ui.unit.dp
 import com.example.bookshelfapi.R
 import com.example.bookshelfapi.core.ui.theme.BookshelfTheme
 
-/** Whether a [StateMessage] describes an error or a neutral state such as idle or empty. */
-enum class StateMessageKind { Neutral, Error }
+/**
+ * Whether a [StateMessage] describes an error, a neutral state such as idle or empty, or a
+ * subtle state such as a filter without matches.
+ */
+enum class StateMessageKind { Neutral, Subtle, Error }
+
+/** The button of a [StateMessage]: filled for the main way forward, outlined for a minor one. */
+enum class StateMessageActionStyle { Filled, Outlined }
 
 /**
  * The centered icon, title, text and optional button shown for idle, empty and error states.
@@ -39,12 +46,16 @@ fun StateMessage(
     kind: StateMessageKind,
     modifier: Modifier = Modifier,
     actionLabel: String? = null,
+    actionStyle: StateMessageActionStyle = StateMessageActionStyle.Filled,
     onAction: () -> Unit = {},
 ) {
     val (containerColor, iconColor) = when (kind) {
         StateMessageKind.Neutral ->
             MaterialTheme.colorScheme.secondaryContainer to
                 MaterialTheme.colorScheme.onSecondaryContainer
+        StateMessageKind.Subtle ->
+            MaterialTheme.colorScheme.surfaceContainerHighest to
+                MaterialTheme.colorScheme.onSurfaceVariant
         StateMessageKind.Error ->
             MaterialTheme.colorScheme.errorContainer to
                 MaterialTheme.colorScheme.onErrorContainer
@@ -80,8 +91,13 @@ fun StateMessage(
             style = MaterialTheme.typography.bodyLarge,
         )
         if (actionLabel != null) {
-            Button(onClick = onAction) {
-                Text(text = actionLabel)
+            when (actionStyle) {
+                StateMessageActionStyle.Filled -> Button(onClick = onAction) {
+                    Text(text = actionLabel)
+                }
+                StateMessageActionStyle.Outlined -> OutlinedButton(onClick = onAction) {
+                    Text(text = actionLabel)
+                }
             }
         }
     }
@@ -113,6 +129,22 @@ private fun StateMessageErrorPreview() {
             message = "Check your internet connection and try again.",
             kind = StateMessageKind.Error,
             actionLabel = "Try again",
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun StateMessageSubtlePreview() {
+    BookshelfTheme {
+        StateMessage(
+            icon = R.drawable.ic_filter_list_off,
+            title = "No matches",
+            message = "None of your books have an author matching “Tolkien”.",
+            kind = StateMessageKind.Subtle,
+            actionLabel = "Clear filter",
+            actionStyle = StateMessageActionStyle.Outlined,
         )
     }
 }

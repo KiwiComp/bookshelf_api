@@ -13,8 +13,11 @@ data object BookshelfDestination
 fun NavController.navigateToBookshelf(navOptions: NavOptions? = null) =
     navigate(BookshelfDestination, navOptions)
 
-fun NavGraphBuilder.bookshelfScreen() {
+fun NavGraphBuilder.bookshelfScreen(
+    onOpenBook: (bookId: String) -> Unit,
+    onSearchBooks: () -> Unit,
+) {
     composable<BookshelfDestination> {
-        BookshelfRoute()
+        BookshelfRoute(onOpenBook = onOpenBook, onSearchBooks = onSearchBooks)
     }
 }

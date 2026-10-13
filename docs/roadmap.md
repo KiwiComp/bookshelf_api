@@ -13,7 +13,7 @@ Status: Not started, In progress, Done.
 | 4 | Navigation shell | feature/navigation-shell | TopLevelDestination, Scaffold with bottom bar, NavHost, navigateToTopLevel and popToTopLevel, shared components in core/ui/components | Done |
 | 5 | Search | feature/search | Search screen with all states and paging | Done |
 | 6 | Book detail | feature/book-detail | Book detail screen with save, remove dialog and snackbars | Done |
-| 7 | Bookshelf | feature/bookshelf | Bookshelf screen with filter, read toggle and all states | Not started |
+| 7 | Bookshelf | feature/bookshelf | Bookshelf screen with filter, read toggle and all states | Done |
 
 ## Decisions
 

@@ -42,5 +42,9 @@ class FakeBookRepository @Inject constructor() : BookRepository {
         savedBooks.value = savedBooks.value.filterNot { book -> book.id == id }
     }
 
-    override suspend fun setRead(id: String, isRead: Boolean) = Unit
+    override suspend fun setRead(id: String, isRead: Boolean) {
+        savedBooks.value = savedBooks.value.map { book ->
+            if (book.id == id) book.copy(isRead = isRead) else book
+        }
+    }
 }
