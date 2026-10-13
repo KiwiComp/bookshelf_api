@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.example.bookshelfapi.feature.bookdetail.navigation.bookDetailScreen
 import com.example.bookshelfapi.feature.bookdetail.navigation.navigateToBookDetail
+import com.example.bookshelfapi.feature.bookdetail.navigation.navigateToBookDetailFromBookshelf
 import com.example.bookshelfapi.feature.bookshelf.navigation.bookshelfScreen
 import com.example.bookshelfapi.feature.search.navigation.SearchDestination
 import com.example.bookshelfapi.feature.search.navigation.searchScreen
@@ -21,7 +22,10 @@ internal fun BookshelfNavHost(
         modifier = modifier,
     ) {
         searchScreen(onOpenBook = navController::navigateToBookDetail)
-        bookshelfScreen()
+        bookshelfScreen(
+            onOpenBook = navController::navigateToBookDetailFromBookshelf,
+            onSearchBooks = { navController.navigateToTopLevel(TopLevelDestination.Search) },
+        )
         bookDetailScreen(
             onBack = { navController.popBackStack() },
             onRemoved = { navController.popToTopLevel() },

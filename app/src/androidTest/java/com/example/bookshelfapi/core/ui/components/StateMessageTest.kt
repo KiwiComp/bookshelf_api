@@ -72,4 +72,27 @@ class StateMessageTest {
 
         assertEquals(1, actionCount)
     }
+
+    @Test
+    fun the_outlined_button_shows_its_label_and_calls_onAction() {
+        var actionCount = 0
+        composeTestRule.setContent {
+            BookshelfTheme {
+                StateMessage(
+                    icon = R.drawable.ic_filter_list_off,
+                    title = "No matches",
+                    message = "None of your books have a title matching “Tolkien”.",
+                    kind = StateMessageKind.Subtle,
+                    actionLabel = "Clear filter",
+                    actionStyle = StateMessageActionStyle.Outlined,
+                    onAction = { actionCount++ },
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("No matches").assertExists()
+        composeTestRule.onNodeWithText("Clear filter").performClick()
+
+        assertEquals(1, actionCount)
+    }
 }

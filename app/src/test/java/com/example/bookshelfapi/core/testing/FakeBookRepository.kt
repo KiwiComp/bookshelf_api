@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.map
 /**
  * An in-memory [BookRepository]. Search answers from [searchResults] by query, returning the
  * requested page, and throws [searchException] when it is set. Saved books come from memory, and
- * books that are not saved from [remoteBooks]. Each write throws its exception when it is set.
+ * books that are not saved from [remoteBooks]. Each read and write throws its exception when it
+ * is set.
  */
 class FakeBookRepository : BookRepository {
 
@@ -35,6 +36,9 @@ class FakeBookRepository : BookRepository {
 
     /** Virtual time saving takes, so the saving state can be observed. */
     var saveDelayMillis = 0L
+
+    /** Thrown by observeSaved while set, as a failed Room read would be. */
+    var observeSavedException: Throwable? = null
 
     var saveException: Throwable? = null
     var removeException: Throwable? = null
@@ -70,7 +74,10 @@ class FakeBookRepository : BookRepository {
         .map { books -> books.any { book -> book.id == id } }
         .distinctUntilChanged()
 
-    override fun observeSaved(): Flow<List<Book>> = savedBooks
+    override fun observeSaved(): Flow<List<Book>> = savedBooks.map { books ->
+        observeSavedException?.let { throw it }
+        books
+    }
 
     override suspend fun save(book: Book) {
         delay(saveDelayMillis)

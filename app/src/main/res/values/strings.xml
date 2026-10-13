@@ -26,7 +26,35 @@
     <string name="search_page">Page %1$d of %2$d</string>
     <string name="search_previous_page">Previous page</string>
     <string name="search_next_page">Next page</string>
+
     <string name="bookshelf_title">My bookshelf</string>
+    <string name="bookshelf_summary">%1$s · %2$s</string>
+    <plurals name="bookshelf_book_count">
+        <item quantity="one">%d book</item>
+        <item quantity="other">%d books</item>
+    </plurals>
+    <plurals name="bookshelf_read_count">
+        <item quantity="one">%d read</item>
+        <item quantity="other">%d read</item>
+    </plurals>
+    <string name="bookshelf_filter_label">Filter your bookshelf</string>
+    <string name="bookshelf_filter_title_placeholder">Type a title</string>
+    <string name="bookshelf_filter_author_placeholder">Type an author</string>
+    <string name="bookshelf_filter_title">Title</string>
+    <string name="bookshelf_filter_author">Author</string>
+    <string name="bookshelf_read">Read</string>
+    <string name="bookshelf_not_read">Not read</string>
+    <string name="bookshelf_loading">Loading bookshelf</string>
+    <string name="bookshelf_empty_title">Your bookshelf is empty</string>
+    <string name="bookshelf_empty_message">Search for a book, open it and save it to your bookshelf.</string>
+    <string name="bookshelf_search_books">Search books</string>
+    <string name="bookshelf_no_matches_title">No matches</string>
+    <string name="bookshelf_no_matches_title_message">None of your books have a title matching “%1$s”.</string>
+    <string name="bookshelf_no_matches_author_message">None of your books have an author matching “%1$s”.</string>
+    <string name="bookshelf_clear_filter">Clear filter</string>
+    <string name="bookshelf_error_title">Something went wrong</string>
+    <string name="bookshelf_error_message">Your bookshelf couldn’t be loaded.</string>
+    <string name="bookshelf_update_read_status_failed">Couldn’t update read status</string>
 
     <string name="detail_year_and_pages">%1$s · %2$s</string>
     <plurals name="detail_page_count">

@@ -217,6 +217,36 @@ class TopLevelNavigationTest {
     }
 
     @Test
+    fun tapping_a_bookshelf_row_opens_book_detail_opened_from_the_bookshelf() {
+        repository.savedBooks.value = listOf(savedBook)
+        navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
+
+        composeTestRule.onNodeWithText(savedBook.title).performClick()
+        composeTestRule.waitForIdle()
+
+        assertBackStack(
+            SearchDestination::class,
+            BookshelfDestination::class,
+            BookDetailDestination::class,
+        )
+        val destination = navController.currentBackStackEntry?.toRoute<BookDetailDestination>()
+        assertEquals(
+            BookDetailDestination(bookId = savedBook.id, openedFromBookshelf = true),
+            destination,
+        )
+    }
+
+    @Test
+    fun search_books_on_an_empty_bookshelf_switches_to_the_search_tab() {
+        navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
+
+        composeTestRule.onNodeWithText("Search books").performClick()
+        composeTestRule.waitForIdle()
+
+        assertBackStack(SearchDestination::class)
+    }
+
+    @Test
     fun switching_tab_from_book_detail_removes_book_detail_from_the_back_stack() {
         navigate { navigateToTopLevel(TopLevelDestination.Bookshelf) }
         navigate { navigateToBookDetail("OL27448W") }
