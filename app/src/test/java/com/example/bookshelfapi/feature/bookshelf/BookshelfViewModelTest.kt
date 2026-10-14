@@ -11,9 +11,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+
+private const val BUG_MESSAGE = "A bug, not a failed database read"
 
 private val aniara = Book(
     id = "OL1W",
@@ -97,6 +100,24 @@ class BookshelfViewModelTest {
         viewModel.uiState.test {
             assertEquals(BookshelfUiState.Error, awaitLoaded())
         }
+    }
+
+    @Test
+    fun `an unexpected exception is rethrown instead of shown as Error`() {
+        repository.observeSavedException = IllegalStateException(BUG_MESSAGE)
+
+        // The exception escapes viewModelScope, so runTest reports it when the test ends.
+        val thrown = assertThrows(IllegalStateException::class.java) {
+            runTest {
+                viewModel.uiState.test {
+                    assertEquals(BookshelfUiState.Loading, awaitItem())
+                    expectNoEvents()
+                }
+            }
+        }
+
+        // Coroutines may rethrow a copy with a recovered stack trace, so compare the message.
+        assertEquals(BUG_MESSAGE, thrown.message)
     }
 
     @Test

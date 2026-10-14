@@ -91,7 +91,7 @@ Add through the version catalog, using the latest stable versions: kotlinx-corou
 
 | Layer | Classes | Lines | Branches |
 | --- | --- | --- | --- |
-| ViewModel | feature/*/*ViewModel* | 95 % | 65 % |
+| ViewModel | feature/*/*ViewModel* | 95 % | 80 % |
 | UiState | feature/*/*UiState* | 95 % | 90 % |
 | Data | core/data/repository, core/data/storage | 90 % | 85 % |
 | Network | core/network | 80 % | – |
