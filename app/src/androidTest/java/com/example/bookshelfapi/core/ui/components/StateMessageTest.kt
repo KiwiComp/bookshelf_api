@@ -3,6 +3,7 @@ package com.example.bookshelfapi.core.ui.components
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.bookshelfapi.R
@@ -94,5 +95,49 @@ class StateMessageTest {
         composeTestRule.onNodeWithText("Clear filter").performClick()
 
         assertEquals(1, actionCount)
+    }
+
+    @Test
+    fun the_button_shows_the_icon_and_the_label_and_calls_onAction() {
+        var actionCount = 0
+        composeTestRule.setContent {
+            BookshelfTheme {
+                StateMessage(
+                    icon = R.drawable.ic_wifi_off,
+                    title = "Couldn’t load results",
+                    message = "Check your internet connection and try again.",
+                    kind = StateMessageKind.Error,
+                    actionLabel = "Try again",
+                    actionIcon = R.drawable.ic_refresh,
+                    onAction = { actionCount++ },
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithTag(STATE_MESSAGE_ACTION_ICON_TAG, useUnmergedTree = true)
+            .assertExists()
+        composeTestRule.onNodeWithText("Try again").performClick()
+
+        assertEquals(1, actionCount)
+    }
+
+    @Test
+    fun the_button_shows_no_icon_without_an_action_icon() {
+        composeTestRule.setContent {
+            BookshelfTheme {
+                StateMessage(
+                    icon = R.drawable.ic_filter_list_off,
+                    title = "No matches",
+                    message = "None of your books have a title matching “Tolkien”.",
+                    kind = StateMessageKind.Subtle,
+                    actionLabel = "Clear filter",
+                    actionStyle = StateMessageActionStyle.Outlined,
+                )
+            }
+        }
+
+        composeTestRule.onNodeWithText("Clear filter").assertExists()
+        composeTestRule.onNodeWithTag(STATE_MESSAGE_ACTION_ICON_TAG, useUnmergedTree = true)
+            .assertDoesNotExist()
     }
 }

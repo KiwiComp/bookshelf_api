@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -18,12 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bookshelfapi.R
 import com.example.bookshelfapi.core.ui.theme.BookshelfTheme
+
+/** Test tag of the decorative icon in the button of a [StateMessage]. */
+internal const val STATE_MESSAGE_ACTION_ICON_TAG = "StateMessageActionIcon"
 
 /**
  * Whether a [StateMessage] describes an error, a neutral state such as idle or empty, or a
@@ -36,7 +42,8 @@ enum class StateMessageActionStyle { Filled, Outlined }
 
 /**
  * The centered icon, title, text and optional button shown for idle, empty and error states.
- * The button is shown only when [actionLabel] is not null.
+ * The button is shown only when [actionLabel] is not null, with [actionIcon] before the label
+ * when it is set.
  */
 @Composable
 fun StateMessage(
@@ -47,6 +54,7 @@ fun StateMessage(
     modifier: Modifier = Modifier,
     actionLabel: String? = null,
     actionStyle: StateMessageActionStyle = StateMessageActionStyle.Filled,
+    @DrawableRes actionIcon: Int? = null,
     onAction: () -> Unit = {},
 ) {
     val (containerColor, iconColor) = when (kind) {
@@ -93,14 +101,32 @@ fun StateMessage(
         if (actionLabel != null) {
             when (actionStyle) {
                 StateMessageActionStyle.Filled -> Button(onClick = onAction) {
-                    Text(text = actionLabel)
+                    ActionContent(label = actionLabel, icon = actionIcon)
                 }
                 StateMessageActionStyle.Outlined -> OutlinedButton(onClick = onAction) {
-                    Text(text = actionLabel)
+                    ActionContent(label = actionLabel, icon = actionIcon)
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ActionContent(
+    label: String,
+    @DrawableRes icon: Int?,
+) {
+    if (icon != null) {
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = null,
+            modifier = Modifier
+                .size(ButtonDefaults.IconSize)
+                .testTag(STATE_MESSAGE_ACTION_ICON_TAG),
+        )
+        Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+    }
+    Text(text = label)
 }
 
 @Preview(showBackground = true)
@@ -124,11 +150,12 @@ private fun StateMessageNeutralPreview() {
 private fun StateMessageErrorPreview() {
     BookshelfTheme {
         StateMessage(
-            icon = R.drawable.ic_search,
+            icon = R.drawable.ic_wifi_off,
             title = "Couldn’t load results",
             message = "Check your internet connection and try again.",
             kind = StateMessageKind.Error,
             actionLabel = "Try again",
+            actionIcon = R.drawable.ic_refresh,
         )
     }
 }

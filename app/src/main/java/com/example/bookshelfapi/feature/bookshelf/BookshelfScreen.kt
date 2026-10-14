@@ -151,6 +151,7 @@ internal fun BookshelfScreen(
                             message = stringResource(R.string.bookshelf_error_message),
                             kind = StateMessageKind.Error,
                             actionLabel = stringResource(R.string.action_try_again),
+                            actionIcon = R.drawable.ic_refresh,
                             onAction = onRetry,
                         )
                     }
@@ -182,6 +183,7 @@ private fun BooksContent(
                     message = stringResource(R.string.bookshelf_empty_message),
                     kind = StateMessageKind.Neutral,
                     actionLabel = stringResource(R.string.bookshelf_search_books),
+                    actionIcon = R.drawable.ic_search,
                     onAction = onSearchBooks,
                 )
             }
