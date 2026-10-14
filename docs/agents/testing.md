@@ -64,6 +64,7 @@ A new feature therefore normally arrives with: a ViewModel test per screen, a UI
 ### Compose
 
 - Test the stateless Screen with createComposeRule, passing a UiState and recording lambda calls. Do not test the Route.
+- Use the v2 test rules from androidx.compose.ui.test.junit4.v2 (createComposeRule, createAndroidComposeRule), not the deprecated ones in androidx.compose.ui.test.junit4. The v2 rules queue coroutines instead of running them immediately, so synchronize with waitForIdle, waitUntil or mainClock, never by waiting in real time.
 - Find nodes by visible text or contentDescription. Use testTag only when there is no other stable way.
 
 ### Navigation
@@ -75,7 +76,7 @@ A new feature therefore normally arrives with: a ViewModel test per screen, a UI
 Unit tests never use Hilt. Instrumented tests that need Hilt ViewModels, such as app-level navigation tests, use this setup:
 
 - HiltTestRunner (in androidTest, root package) is the testInstrumentationRunner and starts HiltTestApplication.
-- HiltTestActivity is an empty @AndroidEntryPoint activity in src/debug, used with createAndroidComposeRule<HiltTestActivity>().
+- HiltTestActivity is an empty @AndroidEntryPoint activity in src/debug, used with the v2 createAndroidComposeRule<HiltTestActivity>().
 - The test class is annotated with @HiltAndroidTest and declares HiltAndroidRule with `order = 0` before the Compose rule with `order = 1`.
 - TestXModule in androidTest under core/testing/ uses @TestInstallIn to replace the data layer's module and binds the repository interface to FakeXRepository.
 - Fakes for instrumented tests live in src/androidTest under core/testing/, separate from the fakes in src/test.
