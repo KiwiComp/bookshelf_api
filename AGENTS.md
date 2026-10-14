@@ -65,7 +65,7 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 | --- | --- | --- |
 | Not saved | Button "Save to bookshelf" with the hint "The book is saved as not read." | detail-unsaved.png |
 | Saving | The same button, disabled, showing a progress indicator and "Saving…" | detail-saving.png |
-| Saved | Label "Status in your bookshelf", segmented control "Not read" / "Read", and a text button "Remove from bookshelf" | detail-saved.png |
+| Saved | Label "Status on your bookshelf", segmented control "Not read" / "Read", and a text button "Remove from bookshelf" | detail-saved.png |
 | Loading | Skeleton following the not-saved layout | detail-loading.png |
 | Not found | Book icon, "Book not found", "This book is no longer available in the book database.", button "Back to search" | detail-not-found.png |
 | No connection | Wifi-off icon, "Couldn’t load the book", "Check your internet connection and try again.", button "Try again" | detail-error-connection.png |
