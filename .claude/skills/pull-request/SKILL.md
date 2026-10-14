@@ -17,7 +17,7 @@ any default attribution behavior.
 
 - Run `git branch --show-current`. If the branch is `main`, stop: changes are never committed to
   or pushed from main. Suggest a branch name whose prefix follows the commit type: feature/<name>, fix/<name>,
-  refactor/<name>, chore/<name>, build/<name>, ci/<name> or docs/<name>.
+  refactor/<name>, chore/<name>, build/<name>, ci/<name>, test/<name> or docs/<name>.
 - Run `git status` and `git log main..HEAD --oneline`. If there is nothing to commit and no commits
   ahead of main, stop and say so.
 - Run `gh auth status`. If it fails, stop and ask the developer to log in.
