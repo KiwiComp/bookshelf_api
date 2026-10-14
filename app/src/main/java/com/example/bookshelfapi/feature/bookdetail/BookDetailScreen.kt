@@ -441,6 +441,7 @@ private fun ErrorContent(
                 message = stringResource(R.string.detail_error_connection_message),
                 kind = StateMessageKind.Error,
                 actionLabel = stringResource(R.string.action_try_again),
+                actionIcon = R.drawable.ic_refresh,
                 onAction = onRetry,
             )
             BookDetailErrorKind.Server -> StateMessage(
@@ -449,6 +450,7 @@ private fun ErrorContent(
                 message = stringResource(R.string.detail_error_server_message),
                 kind = StateMessageKind.Error,
                 actionLabel = stringResource(R.string.action_try_again),
+                actionIcon = R.drawable.ic_refresh,
                 onAction = onRetry,
             )
         }
