@@ -34,7 +34,8 @@ Stop and report if any of these fail:
 
 Then create the branch from main: `git checkout -b fix/$ARGUMENTS-<short-name>`, where
 <short-name> is a few lowercase words from the issue title joined by hyphens. Use another prefix
-from AGENTS.md only if the issue is clearly not a bug fix, such as `docs/` for documentation.
+from AGENTS.md only if the issue is clearly not a bug fix, such as `docs/` for documentation or
+`test/` for issues that only add or change tests.
 
 ## Investigate
 

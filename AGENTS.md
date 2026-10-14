@@ -208,7 +208,7 @@ The most important rules, repeated here because they apply to every task:
 - Screens never receive a NavController. They expose events as lambdas, and only the NavHost decides where they lead.
 - Every change is delivered with its tests. Update existing tests when behavior changes; never weaken, ignore or delete a test to make it pass.
 - For a new feature or a change across several files, propose a short plan and wait for approval.
-- One task per branch: feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name> or docs/<name>. Never commit, push, merge, rebase onto main or force push without asking; leave changes uncommitted for review. Commits, push and pull requests go through the /pull-request skill.
+- One task per branch: feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name>, test/<name> or docs/<name>. Never commit, push, merge, rebase onto main or force push without asking; leave changes uncommitted for review. Commits, push and pull requests go through the /pull-request skill.
 - Ask before adding dependencies, changing the database schema, deleting files, or deviating from the rules.
 - Never guess a library version, an API or a behavior. Say what you could not verify.
 

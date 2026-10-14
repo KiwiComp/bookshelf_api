@@ -29,7 +29,7 @@ Decide on your own anything the prompts already answer, such as names, file plac
 
 ## Git
 
-- Create a branch for each task from an up-to-date main, named after what it adds: feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name> or docs/<name>.
+- Create a branch for each task from an up-to-date main, named after what it adds: feature/<name>, fix/<name>, refactor/<name>, chore/<name>, build/<name>, ci/<name>, test/<name> or docs/<name>.
 - Never commit without asking me first. Leave changes uncommitted so I can review the diff. Committing, pushing and opening a pull request are done through the /pull-request skill, which describes the commit rules.
 - Never push, merge, rebase onto main, or force push without asking me first.
 
