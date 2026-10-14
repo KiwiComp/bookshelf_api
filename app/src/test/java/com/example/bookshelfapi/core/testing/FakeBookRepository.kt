@@ -40,6 +40,9 @@ class FakeBookRepository : BookRepository {
     /** Thrown by observeSaved while set, as a failed Room read would be. */
     var observeSavedException: Throwable? = null
 
+    /** Every book passed to save, including saves that throw. */
+    val saveCalls = mutableListOf<Book>()
+
     var saveException: Throwable? = null
     var removeException: Throwable? = null
     var setReadException: Throwable? = null
@@ -80,6 +83,7 @@ class FakeBookRepository : BookRepository {
     }
 
     override suspend fun save(book: Book) {
+        saveCalls += book
         delay(saveDelayMillis)
         saveException?.let { throw it }
         savedBooks.value += book.copy(isRead = false)

@@ -68,7 +68,7 @@ val coverageLayers = listOf(
         name = "ViewModel",
         includes = listOf("**/feature/*/*ViewModel*.class"),
         minLine = "0.95",
-        minBranch = "0.65",
+        minBranch = "0.80",
     ),
     CoverageLayer(
         name = "UiState",

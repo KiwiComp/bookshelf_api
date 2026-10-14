@@ -183,6 +183,61 @@ class BookDetailViewModelTest {
         assertNull(viewModel.message.value)
     }
 
+    @Test
+    fun `save while the book is loading does not leave the button in the saving state`() =
+        runTest {
+            repository.remoteBooks[book.id] = book
+            val viewModel = createViewModel()
+
+            viewModel.save()
+
+            viewModel.uiState.test {
+                assertEquals(BookDetailUiState.Loading, awaitItem())
+                advanceTimeBy(BOOK_MILLIS + 1)
+                assertEquals(
+                    BookDetailUiState.Success(book = book, isSaved = false, isSaving = false),
+                    awaitItem(),
+                )
+            }
+            assertTrue(repository.saveCalls.isEmpty())
+        }
+
+    @Test
+    fun `save on a saved book keeps its read status`() = runTest {
+        val readBook = book.copy(isRead = true)
+        repository.savedBooks.value = listOf(readBook)
+        val viewModel = createViewModel()
+
+        viewModel.uiState.test {
+            awaitLoaded()
+
+            viewModel.save()
+            advanceTimeBy(SAVE_MILLIS + 1)
+
+            expectNoEvents()
+        }
+        assertTrue(repository.saveCalls.isEmpty())
+        assertEquals(listOf(readBook), repository.savedBooks.value)
+    }
+
+    @Test
+    fun `a double tap on save saves the book once`() = runTest {
+        repository.remoteBooks[book.id] = book
+        val viewModel = createViewModel()
+
+        viewModel.uiState.test {
+            awaitLoaded()
+
+            viewModel.save()
+            assertTrue((awaitItem() as BookDetailUiState.Success).isSaving)
+            viewModel.save()
+            advanceTimeBy(SAVE_MILLIS + 1)
+
+            assertTrue((expectMostRecentItem() as BookDetailUiState.Success).isSaved)
+        }
+        assertEquals(listOf(book), repository.saveCalls)
+    }
+
     // Read status
 
     @Test
@@ -299,6 +354,22 @@ class BookDetailViewModelTest {
 
             assertTrue((expectMostRecentItem() as BookDetailUiState.Success).isRemoved)
         }
+    }
+
+    @Test
+    fun `remove while a saved book is loading keeps the book`() = runTest {
+        repository.savedBooks.value = listOf(book)
+        repository.remoteBooks[book.id] = book
+        val viewModel = createViewModel(openedFromBookshelf = true)
+
+        // As after process death, when the remove dialog is restored before the book has loaded.
+        viewModel.remove()
+
+        viewModel.uiState.test {
+            assertEquals(BookDetailUiState.Success(book = book, isSaved = true), awaitLoaded())
+        }
+        assertEquals(listOf(book), repository.savedBooks.value)
+        assertNull(viewModel.message.value)
     }
 
     @Test
