@@ -12,8 +12,10 @@ it. Never weaken, ignore or skip a test to make a check pass.
 
 1. `./gradlew assembleDebug`
 2. `./gradlew test`
-3. `./gradlew lint`
-4. `./gradlew connectedAndroidTest`, only when androidTest code or the code it covers changed:
+3. `./gradlew verifyUnitTestCoverage`: unit test coverage per layer against the thresholds in
+   docs/agents/testing.md. On failure, show the rule that was violated and its task name.
+4. `./gradlew lint`
+5. `./gradlew connectedAndroidTest`, only when androidTest code or the code it covers changed:
    - Find the changed files with `git diff --name-only main...HEAD` and `git diff --name-only HEAD`,
      plus untracked files from `git status --porcelain`.
    - Instrumented tests are needed when a file under `app/src/androidTest/` changed, or when a

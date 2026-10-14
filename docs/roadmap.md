@@ -19,4 +19,5 @@ Status: Not started, In progress, Done.
 
 - The test dependencies required by docs/agents/testing.md (kotlinx-coroutines-test, Turbine, MockWebServer, navigation-testing) are added in the step that first needs them, not in a separate branch.
 - The dispatcher module moved from step 3 to step 2, since CoverImageStore needs the @IoDispatcher.
+- CI (.github/workflows/ci.yml) runs the build, unit tests, unit test coverage per layer and lint. Instrumented tests are not run in CI; they run locally through /verify.
 - Book detail has two modes for removing a book (see AGENTS.md, Removing a book). Step 7 connects the Bookshelf list's onOpenBook to navigateToBookDetailFromBookshelf.
