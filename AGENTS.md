@@ -175,10 +175,11 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 
     ./gradlew assembleDebug          # build
     ./gradlew test                   # unit tests
+    ./gradlew verifyUnitTestCoverage # unit test coverage per layer (JaCoCo)
     ./gradlew connectedAndroidTest   # instrumented tests (needs a device or emulator)
     ./gradlew lint                   # Android lint
 
-After every change, run the checks in .claude/skills/verify/SKILL.md: build, unit tests, lint, and instrumented tests when androidTest code or the code it covers changed.
+After every change, run the checks in .claude/skills/verify/SKILL.md: build, unit tests, coverage, lint, and instrumented tests when androidTest code or the code it covers changed. CI (.github/workflows/ci.yml) runs the same checks except the instrumented tests on every pull request and on pushes to main.
 
 ## Detailed rules
 
