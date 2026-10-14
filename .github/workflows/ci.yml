@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Build, unit tests, lint and coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      # gradle/gradle-daemon-jvm.properties asks for Java 25 for the Gradle daemon.
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
+
+      - name: Build, test, lint and verify coverage
+        run: >
+          ./gradlew --continue
+          assembleDebug
+          test
+          lint
+          verifyUnitTestCoverage
+          createDebugUnitTestCoverageReport
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: reports
+          path: |
+            app/build/reports/tests/
+            app/build/reports/lint-results-*.html
+            app/build/reports/coverage/
+          if-no-files-found: ignore
