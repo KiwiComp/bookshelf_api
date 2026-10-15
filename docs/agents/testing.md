@@ -104,6 +104,7 @@ Add through the version catalog, using the latest stable versions: kotlinx-corou
 
 - After every change, run the checks in .claude/skills/verify/SKILL.md. It decides when the instrumented tests are needed and what to say when no device is available.
 - Report which test tasks you ran and their result.
+- Instrumented tests find nodes by English text, so run them on a device or emulator with English as the system language. Tests of translated resources load them for their locale explicitly with createConfigurationContext, so they do not depend on the device language.
 
 ## Before you finish
 

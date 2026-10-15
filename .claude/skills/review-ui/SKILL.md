@@ -48,7 +48,7 @@ Report the findings of each part under its own heading.
 - Every state listed in AGENTS.md exists and shows the right icon, title, text and button.
 - Colors only through MaterialTheme.colorScheme roles with their on* pair; error icons in a circle
   with errorContainer and onErrorContainer; no hardcoded colors.
-- All text in strings.xml, counts with plurals resources.
+- All text in strings.xml and translated in values-sv/strings.xml, counts with plurals resources.
 - Cover sizes and the cover placeholder: 150 × 225 dp on Book detail, 52 × 78 dp in lists,
   surfaceVariant background with a 1 dp outlineVariant border.
 - Skeletons use surfaceContainerHighest, follow the layout they replace and have a content

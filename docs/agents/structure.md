@@ -119,7 +119,7 @@ Dependencies go one way only:
 
 - Dependencies are declared in gradle/libs.versions.toml and referenced through the version catalog.
 - Code generators (Hilt, Room) use ksp(...), not implementation(...).
-- User-facing text lives in res/values/strings.xml.
+- User-facing text lives in res/values/strings.xml, with translations in res/values-<lang>/strings.xml. A new string is added to every language in the same change; lint's MissingTranslation check fails the build otherwise.
 
 ## Before you finish
 

@@ -14,6 +14,7 @@ Status: Not started, In progress, Done.
 | 5 | Search | feature/search | Search screen with all states and paging | Done |
 | 6 | Book detail | feature/book-detail | Book detail screen with save, remove dialog and snackbars | Done |
 | 7 | Bookshelf | feature/bookshelf | Bookshelf screen with filter, read toggle and all states | Done |
+| 8 | Swedish localization | feature/swedish-localization | Swedish strings in values-sv, documentation of the two languages, resource tests | Done |
 
 ## Decisions
 

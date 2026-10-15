@@ -23,6 +23,8 @@ it. Never weaken, ignore or skip a test to make a check pass.
      repositories, screens, shared components in core/ui, navigation).
    - Run `adb devices`. If no device or emulator is listed, do not run the task and say so
      explicitly. Never claim that instrumented tests pass when they were not run.
+   - The instrumented tests find nodes by English text, so the device must use English as its
+     system language. If it does not, say so instead of reporting the text failures as bugs.
 
 ## When a check fails
 

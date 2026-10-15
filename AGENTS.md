@@ -10,7 +10,7 @@ Read docs/roadmap.md to see the current step. When a task completes a step, upda
 
 **Purpose:** A reading list app. The user searches for books through the Open Library API, opens a book to see its details, and saves the books they want to keep track of. Saved books, including their cover images, are available offline, and the user can mark them as read.
 
-**Languages:** English only in this version. All user-facing text lives in res/values/strings.xml, so that more languages can be added later without code changes. Counts use plurals resources ("1 result" / "21 results", "1 book" / "8 books").
+**Languages:** English and Swedish. The app follows the device language; English is the default for every other language. English text lives in res/values/strings.xml and Swedish text in res/values-sv/strings.xml. Every string except app_name is translated. Counts use plurals resources in both languages ("1 result" / "21 results", "1 bok" / "8 böcker"). The texts in this file and in the design images are the English reference; the Swedish texts are the ones in values-sv. Swedish text uses the Swedish quotation marks ”…” around {query}, {text} and {title}.
 
 **Screens:**
 
@@ -152,8 +152,8 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 
 **Scope of the current version:**
 
-- In scope: search with paging, book detail, save and remove, mark as read from the list and from detail, Bookshelf with filter by title or author, offline access to saved books and their covers, all states listed above.
-- Out of scope: user accounts, syncing between devices, editing book data, ratings or notes, genres or subjects, other sort orders, showing saved status in search results, saving from the search list, removing from the Bookshelf list, infinite scrolling, languages other than English (Swedish is planned for a later version).
+- In scope: search with paging, book detail, save and remove, mark as read from the list and from detail, Bookshelf with filter by title or author, offline access to saved books and their covers, all states listed above, English and Swedish.
+- Out of scope: user accounts, syncing between devices, editing book data, ratings or notes, genres or subjects, other sort orders, showing saved status in search results, saving from the search list, removing from the Bookshelf list, infinite scrolling, languages other than English and Swedish, choosing the app language separately from the device language.
 
 **App-specific notes:**
 
