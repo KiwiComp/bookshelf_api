@@ -50,7 +50,7 @@ class BookDetailScreenTest {
         composeTestRule.onNodeWithText("Selma Lagerlöf").assertExists()
         composeTestRule.onNodeWithText("1891 · 412 pages").assertExists()
         composeTestRule.onNodeWithText("Save to bookshelf").assertExists()
-        composeTestRule.onNodeWithText("The book is saved as not read.").assertExists()
+        composeTestRule.onNodeWithText("The book will be saved as not read.").assertExists()
         composeTestRule.onNodeWithText("About the book").assertExists()
         composeTestRule.onNodeWithText("The story of Gösta Berling.").assertExists()
         composeTestRule.onNodeWithText("Remove from bookshelf").assertDoesNotExist()
