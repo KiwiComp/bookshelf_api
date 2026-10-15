@@ -29,7 +29,7 @@ Decide which kind an error is before writing code for it.
       val uiState: StateFlow<ItemListUiState> = itemRepository.observeItems()
           .map<List<Item>, ItemListUiState> { items -> ItemListUiState.Success(items) }
           .catch { exception ->
-              if (exception is SQLException) emit(ItemListUiState.Error) else throw exception
+              if (exception is android.database.SQLException) emit(ItemListUiState.Error) else throw exception
           }
           .stateIn(
               scope = viewModelScope,
@@ -37,6 +37,7 @@ Decide which kind an error is before writing code for it.
               initialValue = ItemListUiState.Loading,
           )
 
+- Room failures, both from a DAO's Flow and from a suspend write, are caught as `android.database.SQLException`. With Room 3's default AndroidSQLiteDriver, framework errors are `android.database.sqlite.SQLiteException`, a subclass of it, and `androidx.sqlite.SQLiteException` is a typealias for it on Android. Do not catch the narrower `android.database.sqlite.SQLiteException`.
 - initialValue is Loading. Loading is never a separate flag.
 - Always use SharingStarted.WhileSubscribed(5_000).
 - When the state also depends on screen-local input, merge it with combine before stateIn. Text field input is `var x by mutableStateOf("")` with a private setter (see structure.md), read with `snapshotFlow { x }`. Other input, such as a selected option or a page number, lives in a private MutableStateFlow.
@@ -45,7 +46,7 @@ Decide which kind an error is before writing code for it.
 ## Transient errors and messages
 
 - Write operations are suspend functions called from viewModelScope.launch, wrapped in try/catch.
-- Catch specific exceptions (e.g. IOException, SQLiteException). Never catch Exception or Throwable broadly, and never use runCatching around suspend calls, since that also swallows CancellationException.
+- Catch specific exceptions (e.g. java.io.IOException, android.database.SQLException). Never catch Exception or Throwable broadly, and never use runCatching around suspend calls, since that also swallows CancellationException.
 - On failure, set a one-time message in a private MutableStateFlow<UserMessage?> exposed as StateFlow. UserMessage is an enum (or sealed interface) describing what happened, e.g. DeleteFailed.
 - The ViewModel exposes `fun onMessageShown()` that sets the message back to null.
 - Repositories do not catch errors to hide them. They let exceptions propagate, or emit them through the Flow, so the ViewModel decides how to present them.
