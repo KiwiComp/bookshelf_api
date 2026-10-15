@@ -4,7 +4,10 @@ Bookshelf is a reading list app for Android. Search for books, open one to read 
 
 Book data comes from [Open Library](https://openlibrary.org/), a free and open book database.
 
-<!-- Screenshot: an overview of the app, for example Search and Bookshelf side by side. -->
+<img width="150" alt="Screenshot_1792069352" src="https://github.com/user-attachments/assets/a52d111b-d670-4e1f-808b-e6ccf5a04c25" />
+<img width="150" alt="Screenshot_1792069318" src="https://github.com/user-attachments/assets/78b96e6c-0f7c-441e-bec4-a4cd2ec35214" />
+<img width="150" alt="Screenshot_1792069197" src="https://github.com/user-attachments/assets/c0db6c64-dcfb-4b52-98dc-09d92339aa12" />
+<img width="150" alt="Screenshot_1792069250" src="https://github.com/user-attachments/assets/0e2123f8-e8c1-42c6-b746-73ff692b823b" />
 
 ## Features
 
@@ -22,19 +25,22 @@ Book data comes from [Open Library](https://openlibrary.org/), a free and open b
 
 Type a title or an author to search the book database. Tap a book to open it.
 
-<!-- Screenshot: Search with results. -->
+<img width="150" alt="Screenshot_1792069352" src="https://github.com/user-attachments/assets/17d8dd38-b8b7-4787-9dd0-d82e741c6b5a" />
+<img width="150" alt="Screenshot_1792069197" src="https://github.com/user-attachments/assets/d01b9f9d-3278-474a-b921-7a95eb5a93fb" />
 
 ### Book details
 
 See the cover, author, year, page count and description. Save the book to your bookshelf, mark it as read, or remove it again.
 
-<!-- Screenshot: Book details for a saved book. -->
+<img width="150" alt="Screenshot_1792069326" src="https://github.com/user-attachments/assets/86e14a23-c599-4b56-92ef-1d3f6a2c658e" />
+<img width="150" alt="Screenshot_1792069214" src="https://github.com/user-attachments/assets/93ff04ed-f2be-42f4-8af1-7af1bd435501" />
 
 ### Bookshelf
 
 All the books you have saved, with how many you have read. Filter the list by title or author, and mark books as read directly in the list.
 
-<!-- Screenshot: Bookshelf with a few saved books. -->
+<img width="150" alt="Screenshot_1792069318" src="https://github.com/user-attachments/assets/430a34ad-5095-4705-a08b-3fb8ed06e1f0" />
+<img width="150" alt="Screenshot_1792069250" src="https://github.com/user-attachments/assets/cfa3eef0-b26a-4ec4-9010-233ddf8da23d" />
 
 ## Getting started
 
