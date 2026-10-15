@@ -63,7 +63,7 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 
 | State | Content | Image |
 | --- | --- | --- |
-| Not saved | Button "Save to bookshelf" with the hint "The book is saved as not read." | detail-unsaved.png |
+| Not saved | Button "Save to bookshelf" with the hint "The book will be saved as not read." | detail-unsaved.png |
 | Saving | The same button, disabled, showing a progress indicator and "Saving…" | detail-saving.png |
 | Saved | Label "Status on your bookshelf", segmented control "Not read" / "Read", and a text button "Remove from bookshelf" | detail-saved.png |
 | Loading | Skeleton following the not-saved layout | detail-loading.png |

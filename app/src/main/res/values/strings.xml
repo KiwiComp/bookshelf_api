@@ -64,7 +64,7 @@
     <string name="detail_about">About the book</string>
     <string name="detail_save">Save to bookshelf</string>
     <string name="detail_saving">Saving…</string>
-    <string name="detail_save_hint">The book is saved as not read.</string>
+    <string name="detail_save_hint">The book will be saved as not read.</string>
     <string name="detail_status_label">Status on your bookshelf</string>
     <string name="detail_not_read">Not read</string>
     <string name="detail_read">Read</string>
