@@ -3,6 +3,8 @@ package com.example.bookshelfapi.core.database.dao
 import android.content.Context
 import android.database.SQLException
 import androidx.room3.Room
+import androidx.room3.executeSQL
+import androidx.room3.useWriterConnection
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.bookshelfapi.core.database.AppDatabase
@@ -81,6 +83,17 @@ class BookDaoTest {
         }
 
         assertEquals(dune, dao.observeById(dune.id).first())
+    }
+
+    @Test
+    fun observeAll_throws_SQLException_when_the_table_cannot_be_read() = runTest {
+        database.useWriterConnection { connection -> connection.executeSQL("DROP TABLE books") }
+
+        try {
+            dao.observeAll().first()
+            fail("Expected SQLException")
+        } catch (_: SQLException) {
+        }
     }
 
     @Test
