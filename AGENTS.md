@@ -131,7 +131,7 @@ Every screen uses a large title at the top instead of a top app bar. Book detail
 - Only from Book detail, through the confirmation dialog. Whether the dialog is shown is UI state held with rememberSaveable in the Route.
 - What happens after confirming depends on where Book detail was opened from. BookDetailDestination has `openedFromBookshelf: Boolean = false`: Search opens it with navigateToBookDetail, Bookshelf with navigateToBookDetailFromBookshelf. The ViewModel receives the value through assisted injection.
 - Opened from Bookshelf: the ViewModel deletes the book and its cover file, stops observing the book, and sets a flag in UiState. The Route reacts with LaunchedEffect and calls onRemoved, which the NavHost connects to popToTopLevel, so the user returns to Bookshelf.
-- Opened from Search: the book still exists in the book database, so the user stays on Book detail. The ViewModel deletes the book and its cover file, and the screen follows the repository, which fetches the book again and shows the Not saved state. Offline, this shows the No connection state.
+- Opened from Search: the book still exists in the book database, so the user stays on Book detail. The ViewModel deletes the book and its cover file, and the screen follows the repository, which fetches the book again and shows the Not saved state. Offline, this shows the No connection state. If the book was fetched from the API earlier on the same visit (it was not saved when the screen opened, then saved and removed), the repository shows that fetched book again instead of making a new request.
 
 **Snackbars for temporary errors:**
 
