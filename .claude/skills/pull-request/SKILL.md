@@ -95,7 +95,7 @@ Example:
 
 ## Report
 
-Answer the developer in Swedish with:
+Answer the developer with:
 
 - the branch and the commits that were pushed,
 - the pull request URL,

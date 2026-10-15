@@ -64,7 +64,7 @@ from AGENTS.md only if the issue is clearly not a bug fix, such as `docs/` for d
 
 ## Report
 
-Answer the developer in Swedish with the summary required by the definition of done in
+Answer the developer with the summary required by the definition of done in
 AGENTS.md, plus:
 
 - the cause of the issue in one or two sentences,
