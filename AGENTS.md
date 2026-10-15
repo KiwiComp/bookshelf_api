@@ -203,7 +203,7 @@ If these files and existing code disagree, point out the difference instead of f
 
 The most important rules, repeated here because they apply to every task:
 
-- Code, comments, commit messages and branch names are in English. Answer the developer in Swedish.
+- Code, comments, commit messages and branch names are in English.
 - Package layout: core/model, core/data, core/database, core/network, core/ui, feature/<name>, navigation. Dependencies go one way: navigation -> feature -> core.data -> core.database and core.network, with core.model and core.ui shared. A feature never imports another feature.
 - Screens never receive a NavController. They expose events as lambdas, and only the NavHost decides where they lead.
 - Every change is delivered with its tests. Update existing tests when behavior changes; never weaken, ignore or delete a test to make it pass.

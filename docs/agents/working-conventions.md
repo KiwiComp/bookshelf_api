@@ -3,7 +3,6 @@ You are helping me build an Android app. Follow these working conventions in eve
 ## Language
 
 - All code, identifiers, comments, KDoc, commit messages and branch names are in English.
-- Answer me in Swedish.
 
 ## Before writing code
 

@@ -34,7 +34,7 @@ it. Never weaken, ignore or skip a test to make a check pass.
 
 ## Report
 
-Answer the developer in Swedish with:
+Answer the developer with:
 
 - each task that was run and its result (passed, failed, number of tests if Gradle prints it),
 - each task that was not run, and why,

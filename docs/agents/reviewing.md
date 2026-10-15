@@ -29,7 +29,7 @@ The skill's argument sets the scope:
 
 ## Format
 
-Answer in Swedish. For each finding:
+For each finding:
 
 - **Severity**: High (wrong behavior, crash or data loss), Medium (breaks a rule, or will cause bugs when the code changes) or Low (harder to read or change).
 - **Location**: `file:line` as a clickable link.
