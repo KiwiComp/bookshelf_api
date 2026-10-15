@@ -1,0 +1,85 @@
+<resources>
+    <string name="tab_search">Sök</string>
+    <string name="tab_bookshelf">Bokhylla</string>
+    <string name="action_back">Tillbaka</string>
+    <string name="action_try_again">Försök igen</string>
+
+    <string name="search_title">Sök böcker</string>
+    <string name="search_label">Sök i bokdatabasen</string>
+    <string name="search_placeholder">Titel eller författare</string>
+    <string name="search_clear">Rensa sökningen</string>
+    <plurals name="search_result_count">
+        <item quantity="one">%d resultat</item>
+        <item quantity="other">%d resultat</item>
+    </plurals>
+    <string name="search_loading">Läser in resultat</string>
+    <string name="search_idle_title">Hitta en bok</string>
+    <string name="search_idle_message">Sök i bokdatabasen på titel eller författare. Öppna en bok för att spara den i din bokhylla.</string>
+    <string name="search_no_results_title">Inga böcker hittades</string>
+    <string name="search_no_results_message">Inget matchar ”%1$s”. Kontrollera stavningen eller försök söka på författaren i stället.</string>
+    <string name="search_error_connection_title">Det gick inte att läsa in resultaten</string>
+    <string name="search_error_connection_message">Kontrollera internetanslutningen och försök igen.</string>
+    <string name="search_error_server_title">Sökningen fungerar inte just nu</string>
+    <string name="search_error_server_message">Bokdatabasen svarar inte. Försök igen om en stund.</string>
+    <string name="search_page">Sida %1$d av %2$d</string>
+    <string name="search_previous_page">Föregående sida</string>
+    <string name="search_next_page">Nästa sida</string>
+
+    <string name="bookshelf_title">Min bokhylla</string>
+    <string name="bookshelf_summary">%1$s · %2$s</string>
+    <plurals name="bookshelf_book_count">
+        <item quantity="one">%d bok</item>
+        <item quantity="other">%d böcker</item>
+    </plurals>
+    <plurals name="bookshelf_read_count">
+        <item quantity="one">%d läst</item>
+        <item quantity="other">%d lästa</item>
+    </plurals>
+    <string name="bookshelf_filter_label">Filtrera din bokhylla</string>
+    <string name="bookshelf_filter_title_placeholder">Skriv en titel</string>
+    <string name="bookshelf_filter_author_placeholder">Skriv en författare</string>
+    <string name="bookshelf_filter_title">Titel</string>
+    <string name="bookshelf_filter_author">Författare</string>
+    <string name="bookshelf_read">Läst</string>
+    <string name="bookshelf_not_read">Inte läst</string>
+    <string name="bookshelf_loading">Läser in bokhyllan</string>
+    <string name="bookshelf_empty_title">Din bokhylla är tom</string>
+    <string name="bookshelf_empty_message">Sök efter en bok, öppna den och spara den i din bokhylla.</string>
+    <string name="bookshelf_search_books">Sök böcker</string>
+    <string name="bookshelf_no_matches_title">Inga träffar</string>
+    <string name="bookshelf_no_matches_title_message">Ingen av dina böcker har en titel som matchar ”%1$s”.</string>
+    <string name="bookshelf_no_matches_author_message">Ingen av dina böcker har en författare som matchar ”%1$s”.</string>
+    <string name="bookshelf_clear_filter">Rensa filtret</string>
+    <string name="bookshelf_error_title">Något gick fel</string>
+    <string name="bookshelf_error_message">Det gick inte att läsa in din bokhylla.</string>
+    <string name="bookshelf_update_read_status_failed">Det gick inte att uppdatera lässtatus</string>
+
+    <string name="detail_year_and_pages">%1$s · %2$s</string>
+    <plurals name="detail_page_count">
+        <item quantity="one">%d sida</item>
+        <item quantity="other">%d sidor</item>
+    </plurals>
+    <string name="detail_about">Om boken</string>
+    <string name="detail_save">Spara i bokhyllan</string>
+    <string name="detail_saving">Sparar…</string>
+    <string name="detail_save_hint">Boken sparas som inte läst.</string>
+    <string name="detail_status_label">Status i din bokhylla</string>
+    <string name="detail_not_read">Inte läst</string>
+    <string name="detail_read">Läst</string>
+    <string name="detail_remove">Ta bort från bokhyllan</string>
+    <string name="detail_loading">Läser in boken</string>
+    <string name="detail_not_found_title">Boken hittades inte</string>
+    <string name="detail_not_found_message">Boken finns inte längre i bokdatabasen.</string>
+    <string name="detail_back_to_search">Tillbaka till sökningen</string>
+    <string name="detail_error_connection_title">Det gick inte att läsa in boken</string>
+    <string name="detail_error_connection_message">Kontrollera internetanslutningen och försök igen.</string>
+    <string name="detail_error_server_title">Det gick inte att hämta boken</string>
+    <string name="detail_error_server_message">Bokdatabasen svarar inte. Försök igen om en stund.</string>
+    <string name="detail_remove_dialog_title">Ta bort boken?</string>
+    <string name="detail_remove_dialog_message">”%1$s” tas bort från din bokhylla tillsammans med sin lässtatus. Du kan spara den igen från sökningen.</string>
+    <string name="detail_remove_dialog_cancel">Avbryt</string>
+    <string name="detail_remove_dialog_confirm">Ta bort</string>
+    <string name="detail_save_failed">Det gick inte att spara boken</string>
+    <string name="detail_remove_failed">Det gick inte att ta bort boken</string>
+    <string name="detail_update_read_status_failed">Det gick inte att uppdatera lässtatus</string>
+</resources>
